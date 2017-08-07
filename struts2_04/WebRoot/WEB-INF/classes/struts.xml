@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	
+	<package name="test" extends="struts-default" namespace="/">
+		<!-- 声明拦截器 -->
+		<interceptors>
+			<interceptor name="MyInterceptor" class="com.fj.Interceptor.MyInterceptor"></interceptor>			
+		</interceptors>
+		
+		<action name="interceptor_*" class="com.fj.action.InterceptorAction" method="{1}">
+		<!-- 在这个action中使用我们自定义的拦截器 -->
+			<interceptor-ref name="MyInterceptor">
+				<!-- 此事我们所有的方法都会被拦截器拦住 这个时候我们配置拦截器不拦截的方法 -->
+				<param name="excludeMethods">add</param>
+			</interceptor-ref>
+			<!-- 默认的拦截器依然有效 -->
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<result name="ok">
+				/ok.jsp
+			</result>
+			<result name="err">
+				/err.jsp
+			</result>
+		</action>
+	</package>
+</struts>
