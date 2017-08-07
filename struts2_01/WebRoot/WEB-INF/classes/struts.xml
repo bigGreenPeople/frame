@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+		<!-- 配置常量 -->
+	<constant name="struts.i18n.encoding" value="UTF-8"></constant>
+	
+	<package name="Test" extends="struts-default" namespace="/">
+		<!-- 配置全局结果 -->
+		<global-results>
+			<result name="global">/struts2_01.jsp</result>
+		</global-results>
+		<action name="result_1" class="com.fj.action.ResultAction1">	
+		</action>
+		<action name="result_2" class="com.fj.action.ResultAction2">	
+		</action>
+		
+		<action name="frist_*" method="{1}" class="com.fj.action.FristAction">
+			<result>
+				/struts2_01.jsp
+			</result>
+		</action>
+		<action name="user_*" class="com.fj.action.UserAction" method="{1}">	
+		</action>
+		
+	</package>
+	
+	<!--使用继承包的方式 另一个包的action访问全局结果 -->
+	<package name="Test2" extends="Test" namespace="/struts2">
+		<action name="result_3" class="com.fj.action2.ResultAction3">	
+		</action>
+	</package>
+</struts>
