@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE validators PUBLIC
+  		"-//Apache Struts//XWork Validator 1.0.3//EN"
+  		"http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd">
+<validators>
+	<!-- 这里我们给action配置两个校检规则  正确则正常跳转 错误则跳转到input界面-->
+	<!-- 这里我们name为校检的属性名 -->
+	<field name="username">
+	<!-- 配置第一个规则 -->
+		<field-validator type="requiredstring">
+			<!-- 校检参数 -->
+			<param name="trim">true</param>
+			<!-- 校检失败时的错误信息 -->
+			<message>用户名为空!!!</message>
+		</field-validator>
+	</field>
+</validators>

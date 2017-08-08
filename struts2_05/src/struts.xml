@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	
+	<package name="test" extends="struts-default" namespace="/">
+		<action name="vali_*" class="com.fj.action.ValidateAction" method="{1}">
+			<result name="err">
+				/ok.jsp
+			</result>
+			<result name="input">
+				/err.jsp
+			</result>
+		</action>
+		
+		<action name="vali2_*" class="com.fj.action.ValidateAction2" method="{1}">
+			<result name="ok">
+				/ok.jsp
+			</result>
+			<result name="input">
+				/err.jsp
+			</result>
+		</action>
+	</package>
+</struts>
