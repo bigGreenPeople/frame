@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="test" extends="struts-default" namespace="/">
+	<!-- 配置全局跳转页面 -->
+	<global-results>
+    	<result name="error">/error.jsp</result>
+	</global-results>
+	 <!-- 配置要处理的异常   异常时跳转的页面 -->
+	<global-exception-mappings>
+		<exception-mapping result="error" exception="java.lang.Exception"></exception-mapping>
+	</global-exception-mappings>
+	
+		<action name="exception" class="com.fj.action.ExceptionAction">
+			<result name="ok">
+				/ok.jsp
+			</result>
+		</action>
+		
+		
+	</package>
+</struts>
