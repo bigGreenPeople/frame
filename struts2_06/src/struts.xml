@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<!-- 这里配置一些关于文件上传下载的常量值 	maximumSize设置上传文件的最大大小-->
+	 <constant name="maximumSize" value="2097152"></constant>
+	<package name="test" extends="struts-default" namespace="/">
+		<action name="Upload" class="com.fj.action.UploadAction">
+			<!-- 设置上传文件的后缀名   fileUpload要放在 defaultStack前面  -->
+			<interceptor-ref name="fileUpload">   
+				<!-- 在这里设置常量值也可以 -->
+				<param name="allowedTypes">image/bmp,image/png,image/gif,image/jpeg </param>
+			</interceptor-ref>     
+            <interceptor-ref name="defaultStack"/>
+			<!-- 这里我们应该有一个input类型的界面  因为在上传文件被Upload拦截器拦住的时候就会向input跳转-->
+			<result name="input">
+				/err.jsp
+			</result>
+		</action>
+		
+		<!-- 文件的下载 -->
+		<action name="Upload2" class="com.fj.action.UploadAction2">
+			<result type="stream" name="stream">
+				<!-- 下载的类型 -->
+				<param name="contextType">image/jpeg</param>
+				<!-- 提供一个输入流这个流应该在action中提供了get方法 -->
+				<param name="inputName">getPic()</param>
+				<!-- 提前对文件名进行中文编码 -->
+				<param name="contentDisposition">attachment;filename="${fileName}"</param>
+				<!-- 设置缓冲流 -->
+				<param name="bufferSize">10240</param>	
+			</result>
+		</action>
+	</package>
+</struts>
