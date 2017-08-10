@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.fj.damain.Goods" table="t_Goods">
+		<id name="id" column="id">
+			<generator class="native"></generator>		
+		</id>
+		<property name="goodsName" column="goodsName"></property>
+		<property name="pice" column="pice"></property>
+		<!-- hibernate是双向维护的所有在这里我们也要配置t_Type_id外键 的名称
+			name 就是类中TypeGoods.java的哪个属性
+			class 就是我们一的那一方所对应的类
+		 -->
+		<many-to-one name="typeGoods" class="com.fj.damain.TypeGoods" column="t_Type_id"></many-to-one>
+	</class>
+</hibernate-mapping>
