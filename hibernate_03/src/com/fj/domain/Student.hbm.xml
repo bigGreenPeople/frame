@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.fj.domain.Student" table="t_stu">
+		<id name="id" column="id">
+			<generator class="native"></generator>
+		</id>
+		<property name="name" column="name"></property>
+		
+		<!-- 这里table为第三张表 -->
+		<set name="setTeacher" table="stu_tea">
+			<!--name 这里应该写处于第三张表的外键名 -->
+			<key column="stu_id"></key>
+			<!-- class为另一张表的全路径  culumn为另一张表在第三张表的外键名 -->
+			<many-to-many class="com.fj.domain.Teacher" column="tea_id"></many-to-many>
+		</set>
+	</class>
+</hibernate-mapping>
