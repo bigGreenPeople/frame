@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.fj.domain.Teacher" table="t_tea">
+		<id name="id" column="id">
+			<generator class="native"></generator>
+		</id>
+		
+		<property name="name" column="name"></property>
+		<!-- 配置第三张表的名称要和另一个配置文件相同 	
+			顺便来配置一下级联操作 这里要注意的是：只有操作Teacher的时候才有级联效果   如果想注册Student的时候也有效果请在Student.hbm.xml配置-->
+		<set name="setStudent" table="stu_tea" cascade="save-update,delete">
+			<!--name 这里应该写处于第三张表的外键名 -->
+			<key column="tea_id"></key>
+			<!-- class为另一张表的全路径  culumn为另一张表在第三张表的外键名 -->
+			<many-to-many class="com.fj.domain.Student" column="stu_id"></many-to-many>
+		</set>
+	</class>
+</hibernate-mapping>
