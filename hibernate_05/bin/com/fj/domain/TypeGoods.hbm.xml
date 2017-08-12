@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.fj.domain.TypeGoods" table="t_Type">
+		<id name="id" column="id">
+			<generator class="native"></generator>
+		</id>
+		<property name="typeName" column="typeName"></property>
+
+		<!-- 这里的cascade是是否级联操作   inverse是是否放弃维护  true表示放弃 -->
+		<set name="setGoods" cascade="save-update,delete" inverse="true">
+		<!-- 这里是我们的外键名  含有外键的表的外键名 -->
+			<key column="t_Type_id"></key>
+			<!-- 这里配置含有外键表所对应的类 -->
+			<one-to-many class="com.fj.domain.Goods"/>
+		</set>
+	</class>
+</hibernate-mapping>
