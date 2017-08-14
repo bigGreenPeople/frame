@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- 使用第一种方法(无参构造方法)创建对象 -->
+	<bean id="user1" class="com.fj.createBean1.User"></bean>
+    
+	<!-- 使用第二种方法(静态工厂)创建对象 -->
+	<!-- factory-method表示调用哪个方法来创建对象 -->
+	<bean id="user2" class="com.fj.createBean1.UserFactory" factory-method="getUser"></bean>
+	
+	<!-- 使用第三种方法(实例工厂)创建对象 -->
+	<!-- 先创建工厂对象 -->
+	<bean id="userFactory2" class="com.fj.createBean1.UserFactory2"></bean>
+	<!-- 根据工厂对象得到对象 -->
+	<!-- factory-bean是工厂对象   factory-method是调用的方法	 -->
+	<bean id="user3" factory-bean="userFactory2" factory-method="getUser"></bean>
+</beans>
