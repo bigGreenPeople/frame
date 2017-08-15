@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- 第一种属性(利用构造方法)注入的方式 -->
+	<bean id="user1" class="com.fj.domain.User">
+		<!-- name是属性名  value是属性值  -->
+		<constructor-arg name="username" value="付杰"></constructor-arg>
+		<constructor-arg name="password" value="123456"></constructor-arg>
+	</bean>
+	
+	<!-- 第二种属性(利用set方法)注入的方式 -->
+	<bean id="user2" class="com.fj.domain.User">
+		<property name="username" value="付静"></property>
+		<property name="password" value="456789"></property>
+	</bean>
+	
+	<!-- 注入对象属性 -->
+	<!-- 先配置Book -->
+	<bean id="book" class="com.fj.domain.Book">
+		<!-- 注入属性 -->
+		<property name="bookName" value="九阳真经"></property>
+	</bean>
+	<!-- 配置User -->
+	<bean id="user" class="com.fj.domain.User">
+		<property name="book" ref="book"></property>
+	</bean>
+	
+	<!-- 名称空间p属性注入 -->
+	<bean id="book1" class="com.fj.domain.Book" p:bookName="java编程思想"></bean>
+	
+	<!-- spEl方式注入 -->
+	<bean id="book2" class="com.fj.domain.Book">
+		<!-- 引用另一个类的属性 -->
+		<property name="bookName" value="#{book.bookName}"></property>
+	</bean>
+	
+	
+	<!-- 注入复杂类型 -->
+	
+	<bean id="proper" class="com.fj.domain.Proper">
+		<property name="arr">
+			<list>
+				<value>一</value>
+				<value>二</value>
+				<value>三</value>
+			</list>
+		</property>
+		<property name="list">
+			<list>
+				<value>七</value>
+				<value>八</value>
+				<value>九</value>
+			</list>
+		</property>
+		<property name="set">
+			<list>
+				<value>七3</value>
+				<value>八4</value>
+				<value>九5</value>
+			</list>
+		</property>
+		<property name="map">
+			<map>
+				<entry key="kk" value="kkval"></entry>
+				<entry key="cc" value="ccval"></entry>
+			</map>
+		</property>
+		<property name="properties">
+			<props>
+				<prop  key="pp">valpp</prop>
+				<prop  key="dd">valdd</prop>
+			</props>
+		</property>
+		
+	</bean>
+</beans>
