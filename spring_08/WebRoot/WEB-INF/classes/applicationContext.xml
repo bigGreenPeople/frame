@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd ">
+	<!-- base-package为扫描的包名 -->
+     <context:component-scan base-package="com.fj"></context:component-scan>
+     <!-- 配置spring的连接池 -->
+	<!-- 配置c3p0连接池 -->
+	<bean id="comboPooledDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+		<property name="jdbcUrl" value="jdbc:mysql:///mydb1"></property>
+		<property name="user" value="root"></property>
+		<property name="password" value="1243596620"></property>
+	</bean>
+     <!-- 配置jdbcTemplate对象 -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<!-- 给jdbc模板注入属性(也就是设置数据源) -->
+		<property name="dataSource" ref="comboPooledDataSource"></property>
+	</bean>
+	<!-- 创建dao对象 -->
+	<bean id="empDaoImp" class="com.fj.dao.EmpDaoImp">
+	</bean>
+	<!-- 创建service对象 -->
+	<bean id="empServiceImp" class="com.fj.service.EmpServiceImp">
+	</bean>
+        <!-- 配置事务管理器 -->
+        <bean id="transaction" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        	<property name="dataSource" ref="comboPooledDataSource"></property>
+        </bean>
+        <!-- 使用注解配置事务 -->
+        <!-- 将事务交给spring -->
+        <tx:annotation-driven transaction-manager="transaction"/>
+        
+        <!-- 配置事务通知  也就是配置事务的详细信息 -->
+        <!-- <tx:advice id="txAdvice" transaction-manager="transaction">
+        	<tx:attributes>
+				<tx:method name="transfer" propagation="REQUIRED"/>
+        	</tx:attributes>
+        </tx:advice>
+		改代理模式
+		<aop:aspectj-autoproxy proxy-target-class="true"></aop:aspectj-autoproxy>
+	        
+        配置aop事务
+        <aop:config>
+        	<aop:pointcut expression="execution(* com.fj.service.EmpService.*(..)))" id="pointcut1"/>
+        	将事务的通知织入到切入点中
+        	<aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut1"/>
+        </aop:config> -->
+</beans>
