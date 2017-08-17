@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+     <!-- spring的扫描注解开启 -->
+     <!-- base-package为扫描的包名 -->
+     <context:component-scan base-package="com.fj"></context:component-scan>
+	<!-- 配置spring的连接池 -->
+	<!-- 配置c3p0连接池 -->
+	<bean id="comboPooledDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+		<property name="jdbcUrl" value="jdbc:mysql:///mydb1"></property>
+		<property name="user" value="root"></property>
+		<property name="password" value="1243596620"></property>
+	</bean>
+	
+	<!-- 配置jdbcTemplate对象 -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<!-- 给jdbc模板注入属性(也就是设置数据源) -->
+		<property name="dataSource" ref="comboPooledDataSource"></property>
+	</bean>
+	
+	<!-- 创建dao对象 -->
+	<bean id="userDaoImp" class="com.fj.dao.UserDaoImp">
+	</bean>
+	<!-- 创建service对象 -->
+	<bean id="userService" class="com.fj.service.UserServiceImp">
+	</bean>
+</beans>
