@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd ">
+	<!-- 开启注解扫描 -->
+	<context:component-scan base-package="com.fj"></context:component-scan>
+	<!-- spring创建action -->
+	<bean id="strutsAction" class="com.fj.action.StrutsAction"></bean>
+	<!-- 配置c3p0连接池 -->
+	<bean id="comboPooledDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+		<property name="jdbcUrl" value="jdbc:mysql:///mydb1"></property>
+		<property name="user" value="root"></property>
+		<property name="password" value="1243596620"></property>
+	</bean>
+	<!-- 配置我们hibernate的映射文件 -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<!-- 配置数据库信息 -->
+		<property name="dataSource" ref="comboPooledDataSource"></property>
+		<property name="hibernateProperties">
+			<!-- 配置hibernate的信息 -->
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+			</props>
+		</property>
+		<!--配置映射文件  -->
+		<property name="mappingResources">
+			<list>
+				<value>com/fj/domian/User.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 配置事务 -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+	<!-- 让事务管理器管理这个session工厂 -->
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<!-- 开启事务注解 -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	
+	<!-- 配置HibernateTemplate -->
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate5.HibernateTemplate">
+		<!-- 将我们的sessionFactory配置过来这样模板就接管了hibernate -->
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<!-- 创建service和dao -->
+	<bean id="UserDaoImp" class="com.fj.dao.UserDaoImp">
+	</bean>
+	<bean id="userServiceImp" class="com.fj.service.UserServiceImp">
+	</bean>
+</beans>
