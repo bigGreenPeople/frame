@@ -1,0 +1,6 @@
+package com.fj.service;
+
+public interface UserService {
+	//ÃÌº””√ªß
+	public void addUser();
+}
