@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd ">
+	<!-- spring创建action -->
+	<bean id="strutsAction" class="com.fj.action.StrutsAction"></bean>
+	<!-- 配置c3p0连接池 -->
+	<bean id="comboPooledDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+		<property name="jdbcUrl" value="jdbc:mysql:///mydb1"></property>
+		<property name="user" value="root"></property>
+		<property name="password" value="1243596620"></property>
+	</bean>
+	<!-- 配置我们hibernate的映射文件 -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<!-- 配置数据库信息 -->
+		<property name="dataSource" ref="comboPooledDataSource"></property>
+		<!-- 配置hibernate的核心文件  -->
+		<property name="configLocations" value="classpath:hibernate.cfg.xml"></property>
+	</bean>
+</beans>
