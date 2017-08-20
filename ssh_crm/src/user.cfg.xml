@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd ">
+	<!-- 创建action -->
+	<bean id="userAction" class="com.fj.action.UserAction" scope="prototype">
+		<property name="userService" ref="userServiceImp"></property>
+	</bean>
+	
+	<!-- 创建service和dao -->
+	<bean id="UserDaoImp" class="com.fj.dao.UserDaoImp">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+	
+	<bean id="userServiceImp" class="com.fj.service.UserServiceImp">
+		<property name="userDao" ref="UserDaoImp"></property>
+	</bean>
+</beans>
