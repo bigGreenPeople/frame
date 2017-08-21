@@ -1,6 +1,12 @@
-﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
-<HTML xmlns="http://www.w3.org/1999/xhtml">
-<HEAD id=Head1>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <HEAD id=Head1>
 <TITLE>导航</TITLE>
 <META http-equiv=Content-Type content="text/html; charset=utf-8">
 <STYLE type=text/css>
@@ -128,14 +134,17 @@ A.active {
 											cellPadding=2 width=155 align=center border=0>
 											<TBODY>
 												<TR>
-													<TD class=menuSmall><A class=style2 href="customerServlet?method=add" 
+													<TD class=menuSmall><A class=style2 href="${pageContext.request.contextPath}/customer_toAddPage" 
 														target=main>－ 新增客户</A></TD>
 												</TR>
 												<TR> 
-													<TD class=menuSmall><A class=style2 href="customerServlet?method=list"
+													<TD class=menuSmall><A class=style2 href="customer_list"
 														target=main>－ 客户列表</A></TD>
 												</TR>
-												
+												<TR> 
+													<TD class=menuSmall><A class=style2 href="customer_listPage"
+														target=main>－ 客户分页列表</A></TD>
+												</TR>
 											</TBODY>
 										</TABLE>
 									</TD>
@@ -290,4 +299,4 @@ A.active {
 		</TABLE>
 	</FORM>
 </BODY>
-</HTML>
+</html>

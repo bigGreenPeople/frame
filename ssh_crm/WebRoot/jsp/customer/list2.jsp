@@ -88,7 +88,7 @@
 													<TD>手机</TD>
 													<TD>操作</TD>
 												</TR>
-												<c:forEach items="${list }" var="customer">
+												<c:forEach items="${listPage.list }" var="customer">
 												<TR
 													style="FONT-WEIGHT: normal; FONT-STYLE: normal; BACKGROUND-COLOR: white; TEXT-DECORATION: none">
 													<TD>${customer.custName }</TD>
@@ -114,17 +114,13 @@
 									<TD><SPAN id=pagelink>
 											<DIV
 												style="LINE-HEIGHT: 20px; HEIGHT: 20px; TEXT-ALIGN: right">
-												共[<B>${total}</B>]条记录,[<B>${totalPage}</B>]页
-												,每页显示
-												<select name="pageSize">
-												
-												<option value="15" <c:if test="${pageSize==1 }">selected</c:if>>1</option>
-												<option value="30" <c:if test="${pageSize==30 }">selected</c:if>>30</option>
-												</select>
-												条
-												[<A href="javascript:to_page(${page-1})">前一页</A>]
-												<B>${page}</B>
-												[<A href="javascript:to_page(${page+1})">后一页</A>] 
+												共[<B>${listPage.totalCount}</B>]条记录,[<B>${listPage.totalPage}</B>]页
+												<c:if test="${ listPage.currentPage!=1}">
+													[<A href="${pageContext.request.contextPath }/customer_listPage?currentPage=${listPage.currentPage-1}">前一页</A>]
+												</c:if>
+												<c:if test="${listPage.currentPage!=listPage.totalPage}">
+													[<A href="${pageContext.request.contextPath }/customer_listPage?currentPage=${listPage.currentPage+1}">后一页</A>] 
+												</c:if>
 												到
 												<input type="text" size="3" id="page" name="page" />
 												页
