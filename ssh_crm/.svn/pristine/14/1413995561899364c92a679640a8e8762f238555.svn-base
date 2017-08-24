@@ -4,7 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<TITLE>客户列表</TITLE> 
+<TITLE>客户来源统计</TITLE> 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <LINK href="${pageContext.request.contextPath }/css/Style.css" type=text/css rel=stylesheet>
 <LINK href="${pageContext.request.contextPath }/css/Manage.css" type=text/css
@@ -47,7 +47,7 @@
 					<TD vAlign=top width="100%" bgColor=#ffffff>
 						<TABLE cellSpacing=0 cellPadding=5 width="100%" border=0>
 							<TR>
-								<TD class=manageHead>当前位置：客户管理 &gt; 客户列表</TD>
+								<TD class=manageHead>当前位置：统计分析 &gt; 客户来源统计</TD>
 							</TR>
 							<TR>
 								<TD height=2></TD>
@@ -56,23 +56,7 @@
 						<TABLE borderColor=#cccccc cellSpacing=0 cellPadding=0
 							width="100%" align=center border=0>
 							<TBODY>
-								<TR>
-									<TD height=25>
-										<TABLE cellSpacing=0 cellPadding=2 border=0>
-											<TBODY>
-												<TR>
-													<TD>客户名称：</TD>
-													<TD><INPUT class=textbox id=sChannel2
-														style="WIDTH: 80px" maxLength=50 name="custName"></TD>
-													
-													<TD><INPUT class=button id=sButton2 type=submit
-														value=" 筛选 " name=sButton2></TD>
-												</TR>
-											</TBODY>
-										</TABLE>
-									</TD>
-								</TR>
-							    
+								
 								<TR>
 									<TD>
 										<TABLE id=grid
@@ -81,26 +65,14 @@
 											<TBODY>
 												<TR
 													style="FONT-WEIGHT: bold; FONT-STYLE: normal; BACKGROUND-COLOR: #eeeeee; TEXT-DECORATION: none">
-													<TD>客户名称</TD>
-													<TD>客户级别</TD>
 													<TD>客户来源</TD>
-													<TD>电话</TD>
-													<TD>手机</TD>
-													<TD>操作</TD>
+													<TD>数量</TD>
 												</TR>
-												<c:forEach items="${listPage.list }" var="customer">
+												<c:forEach items="${list }" var="map">
 												<TR
 													style="FONT-WEIGHT: normal; FONT-STYLE: normal; BACKGROUND-COLOR: white; TEXT-DECORATION: none">
-													<TD>${customer.custName }</TD>
-													<TD>${customer.dict.dname }</TD>
-													<TD>${customer.custSource }</TD>
-													<TD>${customer.custPhone }</TD>
-													<TD>${customer.custMobile }</TD>
-													<TD>
-													<a href="${pageContext.request.contextPath }/customer_toUpdate?cid=${customer.cid}">修改</a>
-													&nbsp;&nbsp;
-													<a href="${pageContext.request.contextPath }/customer_delete?cid=${customer.cid}">删除</a>
-													</TD>
+													<td>${map.custSource }</td>
+													<td>${map.num }</td>
 												</TR>
 												
 												</c:forEach>
