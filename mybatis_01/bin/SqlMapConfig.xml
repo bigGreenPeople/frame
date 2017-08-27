@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 引用properties文件 -->	
+	<properties resource="db.properties"></properties>
+	<!-- 配置别名  注意这里的配置是有顺序的-->
+	<typeAliases>
+		<!-- 配置单个别名 -->
+		<!-- <typeAlias alias="user" type="com.fj.po.User"/> -->
+		<!-- 批量别名定义  -->
+		<package name="com.fj.po"/>
+	</typeAliases>
+	<!-- 配置mybatis的一些环境信息 -->
+	<environments default="development">
+		<environment id="development">
+			<!-- 使用jdbc事务管理 -->
+			<transactionManager type="JDBC"/>
+			<!-- 配置数据库的连接池 -->
+			<dataSource type="pooled">
+				<property name="driver" value="${jdbc.driver}"/>
+				<property name="url" value="${jdbc.url}"/>
+				<property name="username" value="${jdbc.username}" />
+				<property name="password" value="${jdbc.password}" />
+			</dataSource>
+		</environment>
+	</environments>
+	
+	
+	<!-- 在这里配置我们的映射文件 -->
+	<mappers>
+		<mapper resource="sqlmap/Users.xml"/>
+		<!-- 此种方法要求mapper接口名称和mapper映射文件名称相同，且放在同一个目录中 -->
+		<!-- <mapper class="com.fj.mapper.UserMapper"/> -->
+		<!-- 注册包下所有的mapper接口 -->
+		<package name="com.fj.mapper"/>
+	</mappers>
+</configuration>

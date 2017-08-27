@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 给出命名空间 -->
+<mapper namespace="test">
+	<!--parameterType是输入参数的类型 resultType是返回的类型 -->
+	<select id="findUserById" parameterType="int" resultType="com.fj.po.User">
+		<!-- #{}是占位符id为输入的参数 相当于？ -->
+		SELECT * FROM USER WHERE id=#{id}
+	</select>
+	<!-- 模糊查询 -->
+	<select id="findUserByUsername" parameterType="java.lang.String" resultType="com.fj.po.User">
+		<!-- ${}表示拼接sql串  ${}括号中只能是value-->
+		SELECT * FROM USER WHERE username LIKE '%${value}%'
+	</select>
+	<!-- 添加记录 -->
+	<insert id="insertUser" parameterType="com.fj.po.User">
+		<!-- 配置获取id值的selectkey -->
+		<!-- keyProperty是要获取的值(这里是pojo对象的属性)  order是插入前还是插入后-->
+		<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		INSERT INTO USER(id,username,birthday,sex,address) VALUES(#{id},#{username},#{birthday},#{sex},#{address})
+	</insert>
+	<!-- 删除 -->
+	<delete id="deleteUserById" parameterType="java.lang.Integer">
+		delete from user where id=#{id}
+	</delete>
+	<!-- 更新用户 -->
+	<update id="updateUser" parameterType="com.fj.po.User">
+		UPDATE USER SET username=#{username}
+		WHERE id=#{id}
+	</update>
+</mapper>

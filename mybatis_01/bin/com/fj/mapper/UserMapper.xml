@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 给出命名空间 -->
+<mapper namespace="com.fj.mapper.UserMapper">
+	<!--定义 resultMap让查询到的结果和pojo类一一对应 -->
+	<resultMap type="user" id="userListResultMap">
+		<id column="id_" property="id"/>
+		<result column="username_" property="username"/>
+		<result column="sex_" property="sex"/>
+	</resultMap>
+		
+	<!--parameterType是输入参数的类型 resultType是返回的类型 -->
+	<select id="findUserById" parameterType="int" resultMap="userListResultMap">
+		<!-- #{}是占位符id为输入的参数 相当于？ -->
+		SELECT username as username_,sex AS sex_ FROM USER WHERE id=#{id}
+	</select>
+	<!-- 模糊查询 -->
+	<select id="findUserByUsername" parameterType="java.lang.String" resultType="com.fj.po.User">
+		<!-- ${}表示拼接sql串  ${}括号中只能是value-->
+		SELECT * FROM USER WHERE username LIKE '%${value}%'
+	</select>
+	<!-- 添加记录 -->
+	<insert id="insertUser" parameterType="com.fj.po.User">
+		<!-- 配置获取id值的selectkey -->
+		<!-- keyProperty是要获取的值(这里是pojo对象的属性)  order是插入前还是插入后-->
+		<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		INSERT INTO USER(id,username,birthday,sex,address) VALUES(#{id},#{username},#{birthday},#{sex},#{address})
+	</insert>
+	<!-- 删除 -->
+	<delete id="deleteUserById" parameterType="java.lang.Integer">
+		delete from user where id=#{id}
+	</delete>
+	<!-- 更新用户 -->
+	<update id="updateUser" parameterType="com.fj.po.User">
+		UPDATE USER SET username=#{username}
+		WHERE id=#{id}
+	</update>
+	<!-- 查询用户列表 -->
+	<select id="findUserList" parameterType="queryVo" resultType="user">
+		select * from user where username=#{userCustom.username} and sex=#{userCustom.sex}
+	</select>
+	<!-- 获取用户列表总数 -->
+	<select id="findUserCount" parameterType="user" resultType="int">
+		select count(*) from user
+	</select>
+</mapper>
