@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 给出命名空间 -->
+<mapper namespace="com.fj.mapper.UserMapper">
+	<sql id="findUserListIdSql">
+		<if test="ids!=null and ids.size!=0">
+				<!--
+					collection是queryVo的集合属性名
+					item是遍历的值
+					open是连接开头字符串
+					close是连接结束字符串
+					separator是中间的连接的字符串
+				  -->
+				<foreach collection="ids" item="id" open="and id in (" close=")" separator=",">
+					#{id}
+				</foreach>
+			</if>
+	</sql>
+	<sql id="findUserListSql">
+		<if test="username!=null and username!=''">
+			and username=#{username}
+		</if>
+		<if test="id!=null and id!=''">
+			and id=#{id}
+		</if>
+	</sql>
+	
+	<select id="findUserList" parameterType="user" resultType="user">
+		select * from user
+		<where>
+			<include refid="findUserListSql"></include>
+		</where>
+	</select>
+	<!-- 查询在list里面的id -->
+	<select id="findUserListId" parameterType="queryVo" resultType="user">
+		select * from user
+		<where>
+			<include refid="findUserListIdSql"></include>
+		</where>
+	</select>
+	
+</mapper>
