@@ -55,4 +55,18 @@ public class OrdersCustomMapperTest {
 		
 	}
 
+	@Test
+	public void testFindOrdersDetailList() {
+		//得到我们的会话
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		//得到代理对象
+		OrdersCustomMapper ordersCustomMapper = sqlSession.getMapper(OrdersCustomMapper.class);
+		//调用方法
+		List<Orders> list = ordersCustomMapper.findOrdersDetailList();
+		
+		for (Orders orders : list) {
+			System.out.println(orders);
+		}
+		
+	}
 }

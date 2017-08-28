@@ -1,6 +1,7 @@
 package com.fj.po;
 
 import java.util.Date;
+import java.util.List;
 
 public class Orders {
 	private Integer id;
@@ -11,9 +12,17 @@ public class Orders {
 	
 	//定义user表示一对一
 	private User user;
+	//定义orderdetails订单详情
+	List<Orderdetail> orderdetails;
 	
 	
 	
+	public List<Orderdetail> getOrderdetails() {
+		return orderdetails;
+	}
+	public void setOrderdetails(List<Orderdetail> orderdetails) {
+		this.orderdetails = orderdetails;
+	}
 	public User getUser() {
 		return user;
 	}
