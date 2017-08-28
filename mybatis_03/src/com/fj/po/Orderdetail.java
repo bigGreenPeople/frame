@@ -5,6 +5,16 @@ public class Orderdetail {
 	private Integer orders_id;
 	private Integer items_id;
 	private Integer items_num;
+	//配置与商品表的属性
+	private Items items;
+	
+	
+	public Items getItems() {
+		return items;
+	}
+	public void setItems(Items items) {
+		this.items = items;
+	}
 	public Integer getId() {
 		return id;
 	}

@@ -15,8 +15,6 @@ public class Orders {
 	//定义orderdetails订单详情
 	List<Orderdetail> orderdetails;
 	
-	
-	
 	public List<Orderdetail> getOrderdetails() {
 		return orderdetails;
 	}
