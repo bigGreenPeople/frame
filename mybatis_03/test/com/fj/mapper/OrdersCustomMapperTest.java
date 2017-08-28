@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.fj.po.Orders;
+import com.fj.po.OrdersAndOrdersDetail;
 import com.fj.po.OrdersCustom;
 import com.fj.po.User;
 
@@ -82,6 +83,21 @@ public class OrdersCustomMapperTest {
 		
 		for (User user : list) {
 			System.out.println(user);
+		}
+		
+	}
+	
+	@Test
+	public void testFindOrdersDetailListType() {
+		//得到我们的会话
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		//得到代理对象
+		OrdersCustomMapper ordersCustomMapper = sqlSession.getMapper(OrdersCustomMapper.class);
+		//调用方法
+		List<OrdersAndOrdersDetail> list = ordersCustomMapper.findOrdersDetailListType();
+		
+		for (OrdersAndOrdersDetail oao : list) {
+			System.out.println(oao);
 		}
 		
 	}
