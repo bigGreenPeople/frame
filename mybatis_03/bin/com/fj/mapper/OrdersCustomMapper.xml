@@ -3,7 +3,32 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fj.mapper.OrdersCustomMapper">
+	<!-- 定义一对一的关系resultMap -->
+	<resultMap type="com.fj.po.Orders" id="userordermap">
+		<id column="id" property="id"/>
+		<result column="user_id" property="user_id"/>
+		<result column="number" property="number"/>
+		<result column="createtime" property="createtime"/>
+		<result column="note" property="note"/>
+		<!-- 配置user的映射关系 -->
+		<association property="user" javaType="com.fj.po.User">
+			<id column="user_id" property="id"/>
+			<result column="username" property="username"/>
+			<result column="sex" property="sex"/>
+			<result column="birthday" property="birthday"/>
+			<result column="address" property="address"/>
+		</association>
+	</resultMap>
+
 	<select id="findOrdersList" resultType="ordersCustom">
+		SELECT orders.*,user.username,
+		  user.address,
+		  user.birthday,
+		  user.sex
+		 FROM USER,orders WHERE USER.id=orders.user_id;
+	</select>
+	<!-- 使用resultMap来查询一对一的关系 -->
+	<select id="findOrdersListMap" resultMap="userordermap">
 		SELECT orders.*,user.username,
 		  user.address,
 		  user.birthday,

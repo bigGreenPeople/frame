@@ -8,6 +8,18 @@ public class Orders {
 	private String number;
 	private Date createtime;
 	private String note;
+	
+	//定义user表示一对一
+	private User user;
+	
+	
+	
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
 	public Integer getId() {
 		return id;
 	}

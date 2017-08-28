@@ -12,6 +12,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.fj.po.Orders;
 import com.fj.po.OrdersCustom;
 
 public class OrdersCustomMapperTest {
@@ -34,6 +35,22 @@ public class OrdersCustomMapperTest {
 		
 		for (OrdersCustom ordersCustom : list) {
 			System.out.println(ordersCustom);
+		}
+		
+	}
+	
+
+	@Test
+	public void testFindOrdersListMap() {
+		//得到我们的会话
+		SqlSession sqlSession = sqlSessionFactory.openSession();
+		//得到代理对象
+		OrdersCustomMapper ordersCustomMapper = sqlSession.getMapper(OrdersCustomMapper.class);
+		//调用方法
+		List<Orders> list = ordersCustomMapper.findOrdersListMap();
+		
+		for (Orders orders : list) {
+			System.out.println(orders);
 		}
 		
 	}
