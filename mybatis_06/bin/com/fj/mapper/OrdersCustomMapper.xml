@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fj.mapper.OrdersCustomMapper">
+	<!-- 此Ehcache开启二级缓存 -->
+ 	<cache type="org.mybatis.caches.ehcache.EhcacheCache">
+ 		<property name="timeToIdleSeconds" value="3600"/>
+        <property name="timeToLiveSeconds" value="3600"/>
+        <!-- 同ehcache参数maxElementsInMemory -->
+		<property name="maxEntriesLocalHeap" value="1000"/>
+		<!-- 同ehcache参数maxElementsOnDisk -->
+        <property name="maxEntriesLocalDisk" value="10000000"/>
+        <property name="memoryStoreEvictionPolicy" value="LRU"/>
+ 	</cache>
+	<!-- 配置userordermap -->
+	<resultMap type="com.fj.po.Orders" id="userordermap">
+		<id column="id" property="id"/>
+		<result column="user_id" property="user_id"/>
+		<result column="number" property="number"/>
+		<result column="createtime" property="createtime"/>
+		<result column="note" property="note"/>
+		<!-- 配置user的映射 -->
+		<association property="user" javaType="com.fj.po.User" select="findUserById" column="user_id">
+		</association>
+		<!-- 配置 Orderdetail的list映射  column是此表要关联的字段-->
+		<collection property="orderdetails" ofType="com.fj.po.Orderdetail" select="findOrderdetailById" column="id">
+		</collection>
+	</resultMap>
+	
+	<select id="findOrdersListMap" resultMap="userordermap">
+		SELECT 
+		  orders.*
+		FROM
+		  orders 
+	</select>
+	<!-- 配置使用id去查询用户 -->
+	<select id="findUserById" parameterType="int" resultType="user">
+		select * from user where id=#{id}
+	</select>
+	<!-- 配置orders_id来查询订单明细 -->
+	<select id="findOrderdetailById" parameterType="int" resultType="orderdetail">
+		SELECT * FROM orderdetail WHERE orders_id=#{id}
+	</select>
+</mapper>
