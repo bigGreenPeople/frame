@@ -10,4 +10,5 @@ import com.fj.po.User;
 public interface OrdersCustomMapper {
 	//查询订单和用户的信息(一对一   使用resultMap)
 	public List<Orders> findOrdersListMap();
+	public User findUserById(int id);
 }

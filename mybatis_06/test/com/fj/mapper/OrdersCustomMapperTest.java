@@ -11,7 +11,11 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Before;
 import org.junit.Test;
+import org.mybatis.spring.mapper.MapperFactoryBean;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.fj.dao.OrdersDao;
 import com.fj.po.Orderdetail;
 import com.fj.po.Orders;
 import com.fj.po.OrdersAndOrdersDetail;
@@ -19,36 +23,35 @@ import com.fj.po.OrdersCustom;
 import com.fj.po.User;
 
 public class OrdersCustomMapperTest {
-
-	private SqlSessionFactory sqlSessionFactory;
-	@Before
-	public void setUp() throws Exception {
-		InputStream inputStream = Resources.getResourceAsStream("SqlMapConfig.xml");
-		sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+	//使用传统的接口dao的方式
+	@Test
+	public void demo(){
+		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+		OrdersDao ordersDao = (OrdersDao) context.getBean("ordersDao");
+		User user = ordersDao.findOrdersById(2);
+		System.out.println(user);
 	}
 	
+/*	//使用MapperFactoryBean
 	@Test
-	public void testFindOrdersListMap(){
-		//得到多个sqlsession
-		SqlSession sqlSession1 = sqlSessionFactory.openSession();
-		SqlSession sqlSession2 = sqlSessionFactory.openSession();
-		SqlSession sqlSession3 = sqlSessionFactory.openSession();
-		//得到多个代理对象
-		OrdersCustomMapper mapper1 = sqlSession1.getMapper(OrdersCustomMapper.class);
-		OrdersCustomMapper mapper2 = sqlSession2.getMapper(OrdersCustomMapper.class);
-		OrdersCustomMapper mapper3 = sqlSession3.getMapper(OrdersCustomMapper.class);
-		//调用方法
-		//这里我把懒加载的配置去掉了所以发出了多条sql语句
-		List<Orders> list = mapper1.findOrdersListMap();
-		//关闭
-		sqlSession1.close();
-		//命中
-		//DEBUG [main] - Cache Hit Ratio [com.fj.mapper.OrdersCustomMapper]: 0.14285714285714285
-		//DEBUG [main] - Cache Hit Ratio [com.fj.mapper.OrdersCustomMapper]: 0.25
-		List<Orders> list2 = mapper2.findOrdersListMap();
-		sqlSession2.close();
+	public void demo2(){
+		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+		MapperFactoryBean mapperFactory = (MapperFactoryBean) context.getBean("mapperFactory");
+		User user = mapperFactory.get
+		System.out.println(user);
+	}*/
+
+	//	使用mapper扫描器
+	@Test
+	public void demo3(){
+		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+		OrdersCustomMapper mapper = (OrdersCustomMapper) context.getBean("ordersCustomMapper");
 		
-		List<Orders> list3 = mapper3.findOrdersListMap();
-		sqlSession3.close();
+		List<Orders> list = mapper.findOrdersListMap();
+		
+		for (Orders orders : list) {
+			System.out.println(orders);
+		}
+		
 	}
 }
